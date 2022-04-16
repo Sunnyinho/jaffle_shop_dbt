@@ -22,7 +22,7 @@ final as (
     select
         customers.customer_id,
         customers.first_name,
-        case when customer_orders.more_than_three_orders = t then xyz
+        customer_orders.more_than_three_orders
     from customers
 
     right join customer_orders
