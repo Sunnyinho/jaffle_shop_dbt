@@ -13,9 +13,10 @@ payments as (
 customer_orders as (
     select
         customer_id,
-        count(order_id) >= 3 as more_than_three_orders
+        count(order_id)>=3 as more_than_three_orders
     from orders
     group by customer_id
+    having count(order_id)>=3
 ),
 
 final as (
@@ -25,11 +26,10 @@ final as (
         customer_orders.more_than_three_orders
     from customers
 
-    left join customer_orders
+    inner join customer_orders
         on customers.customer_id = customer_orders.customer_id
     
-    where more_than_three_orders is true
-
+    --  where more_than_three_orders is true
 )
 
 select * from final
