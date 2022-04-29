@@ -10,20 +10,75 @@ payments as (
     select * from {{ref('stg_payments')}}
 ),
 
+-- customer_count as (
+
+--     select
+--         customer_id,
+--         count(order_id)>=3 as more_than_three_orders
+--     from orders
+--     group by customer_id
+--     having count(order_id)>=3
+--     order by customer_id
+-- ),
+
 
 customer_orders as (
 
     select
         customer_id,
+        order_id,
         order_date,
-        lead(order_date) over (partition by customer_id) as row_after_most_recent,
-        row_number() over (partition by customer_id) as rn
+        lead(order_date) over (partition by customer_id order by order_date desc) as row_after_most_recent,
+        lead(order_id) over (partition by customer_id order by order_date desc) as row_after_most_recent_order,
+        row_number() over (partition by customer_id) as rn,
+        count(customer_id) over (partition by customer_id) as order_count
 
     from orders
-    group by customer_id, order_date
-    order by customer_id asc, order_date desc
+    -- inner join customer_count
+    --     using(customer_id)
 
+    -- group by customer_id, order_date
+    -- order by customer_id
+    -- order_date desc
+
+),
+
+filtered_orders as (
+
+    select *
+    from customer_orders
+    where rn = 1 and order_count >= 3
+ 
 )
+
+-- customer_payments as (
+
+--     select
+
+--         filtered_orders.*,
+
+--         payments.amount
+
+--     from payments
+--     right join filtered_orders
+--         on payments.order_id = filtered_orders.order_id
+
+
+
+-- )
+
+select * from filtered_orders
+
+-- abc as (
+
+--     select
+--     *
+--     from customer_orders
+--     inner join customer_count
+--     using (customer_id)
+--     where customer_orders.rn = 1
+
+-- )
 
 -- customer_payments as (
 
@@ -58,4 +113,3 @@ customer_orders as (
 
 -- )
 
-select * from customer_orders
