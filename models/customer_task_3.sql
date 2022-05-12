@@ -61,9 +61,6 @@ filtered_orders as (
 --     from payments
 --     right join filtered_orders
 --         on payments.order_id = filtered_orders.order_id
-
-
-
 -- )
 
 select * from filtered_orders

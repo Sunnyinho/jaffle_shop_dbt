@@ -28,10 +28,22 @@ filtered_orders as (
 
     select *
     from customer_orders
-    where  order_count >= 3
---  rn = 1 and
+    where rn = 1 and order_count >= 3
+
+),
+
+customer_payments as (
+
+    select
+        filtered_orders.* ,
+        sum(payments.amount) as total_amount
+    from payments
+
+    right join filtered_orders
+        on payments.order_id = filtered_orders.order_id
+
+    group by filtered_orders.customer_id, filtered_orders.order_id, filtered_orders.order_date, row_after_most_recent_order, row_after_most_recent, filtered_orders.rn, filtered_orders.order_count
+
 )
 
-
-
-select * from filtered_orders
+select * from customer_payments
