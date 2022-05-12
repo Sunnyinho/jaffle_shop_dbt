@@ -21,7 +21,6 @@ payments as (
 --     order by customer_id
 -- ),
 
-
 customer_orders as (
 
     select
@@ -48,7 +47,7 @@ filtered_orders as (
     select *
     from customer_orders
     where rn = 1 and order_count >= 3
- 
+
 )
 
 -- customer_payments as (
