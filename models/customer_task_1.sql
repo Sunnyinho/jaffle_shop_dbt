@@ -48,7 +48,8 @@ final as (
         customers.first_name,
         customer_orders.total_orders,
         customer_payments.total_amount,
-        customer_payments.total_average
+        customer_payments.total_average,
+        coalesce(customer_payments.total_average, 0) as total_average_coalesced
     
     from customers
 
