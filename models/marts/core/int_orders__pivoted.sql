@@ -1,4 +1,5 @@
 {%- set payment_methods = ['bank_transfer', 'coupon', 'credit_card', 'gift_card'] -%}
+
 with payments as (
 
     select * from {{ ref('stg_payments') }}
@@ -20,6 +21,7 @@ with payments as (
 -- )
 
 -- select * from pivoted
+-- inplementing above method using jinja methods
 
 pivoted as (
 
@@ -30,10 +32,11 @@ pivoted as (
         {%- if not loop.last -%}
                 ,
         {% endif -%}
-        {%- endfor -%}
+        {%- endfor %}
     from payments
     group by order_id
     order by order_id
+
 )
 
 select * from pivoted
