@@ -13,7 +13,7 @@ macro_implemented_orders as (
         status
     from orders
 
-    {{ limit_data('order_date', '100') }}
+    {{ limit_data('order_date', 10) }}
 
 )
 
