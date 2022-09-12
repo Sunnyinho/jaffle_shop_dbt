@@ -16,8 +16,9 @@ renamed as (
         payment_method,
 
         -- `amount` is currently stored in cents, so we convert it to dollars
+        
         amount / 100 as amount
-
+        -- {{ cents_to_dollars('amount', 4) }} as amount  #uncomment this line to use macro
     from source
 
 )
