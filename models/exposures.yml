@@ -1,0 +1,12 @@
+version: 2
+
+exposures:
+  - name: customers_exposure
+    description: This table has basic information about a customer, as well as some derived facts based on a customer's orders
+    type: analysis
+    depends_on:
+      - ref('customers')
+
+    owner:
+      name: Sunny Shah
+      email: sunnnny619@gmail.com
