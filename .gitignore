@@ -7,3 +7,5 @@ logs/
 dbt_packages/
 
 .vscode/
+
+package-lock.yml

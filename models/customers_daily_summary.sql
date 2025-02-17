@@ -7,7 +7,7 @@ with orders as (
 intermediate_model as (
 
     select
-        {{ dbt_utils.surrogate_key(['customer_id', 'order_date']) }} as id,
+        {{ dbt_utils.generate_surrogate_key(['customer_id', 'order_date']) }} as id,
         customer_id,
         order_date,
         count(*)
